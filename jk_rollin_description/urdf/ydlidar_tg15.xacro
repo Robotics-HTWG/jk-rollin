@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="m_yalidar_tg15">
+
+	<xacro:macro name="ydlidar_tg15" params="link_prefix">
+		<link name="${link_prefix}_link">
+			<visual>
+				<origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+				<geometry>
+					<mesh filename="package://jk_rollin_description/meshes/sensors/ydlidar_tg15.stl" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="white"/>
+			</visual>
+			<collision>
+				<geometry>
+					<cylinder length="0.035" radius="0.04"/>
+				</geometry>
+				<origin rpy="0 0 0" xyz="0.0 0.0 0.0175"/>
+			</collision>
+			<inertial>
+				<origin xyz="0 0 0" />
+				<mass value="0.141" />
+				<inertia ixx=" 81.998e-06" ixy="0.0e-06" ixz="0.0e-06"
+					 iyy=" 81.998e-06" iyz="0.0e-06"
+					 izz="116.909e-06" />
+			</inertial>
+		</link>
+
+		<link name="ydlaser_frame"></link>
+
+		<joint name="base_to_laser" type="fixed">
+			<parent link="${link_prefix}_link"/>
+			<child link="ydlaser_frame"/>
+			<origin rpy="0 0 0" xyz="0.0 0.0 0.0279"/>
+		</joint>
+	</xacro:macro>
+
+</robot>
+

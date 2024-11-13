@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<robot name="jk_arm_sim" xmlns:xacro="http://ros.org/wiki/xacro">
+
+	<gazebo>
+		<plugin name="joint_act_plugin" filename="libgazebo_ros_control.so">
+			<robotNamespace>gazebo_jk_arm</robotNamespace>
+		</plugin>
+	</gazebo>
+
+	<transmission name="trans_1">
+		<type>transmission_interface/SimpleTransmission</type>
+		<joint name="turntable">
+			<hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+		</joint>
+		<actuator name="servo_10">
+			<mechanicalReduction>1</mechanicalReduction>
+			<hardwareInterface>PositionJointInterface</hardwareInterface>
+		</actuator>
+	</transmission>
+
+
+	<transmission name="trans_2">
+		<type>transmission_interface/SimpleTransmission</type>
+		<joint name="shoulder">
+			<hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+
+		</joint>
+		<actuator name="servo_11">
+			<mechanicalReduction>1</mechanicalReduction>
+			<hardwareInterface>PositionJointInterface</hardwareInterface>
+		</actuator>
+	</transmission>
+
+	<transmission name="trans_3">
+		<type>transmission_interface/SimpleTransmission</type>
+		<joint name="elbow">
+			<hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+
+		</joint>
+		<actuator name="servo_12">
+			<mechanicalReduction>1</mechanicalReduction>
+			<hardwareInterface>PositionJointInterface</hardwareInterface>
+		</actuator>
+	</transmission>
+
+	<transmission name="trans_4">
+		<type>transmission_interface/SimpleTransmission</type>
+		<joint name="wrist">
+			<hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+
+		</joint>
+		<actuator name="servo_14">
+			<mechanicalReduction>1</mechanicalReduction>
+			<hardwareInterface>PositionJointInterface</hardwareInterface>
+		</actuator>
+	</transmission>
+
+
+</robot>

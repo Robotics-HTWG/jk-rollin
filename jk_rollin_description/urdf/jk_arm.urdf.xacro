@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<robot name="jk_arm" xmlns:xacro="http://ros.org/wiki/xacro">
+
+	<xacro:include filename="$(find jk_rollin_description)/urdf/common_properties.xacro"/>
+	<xacro:include filename="$(find jk_rollin_description)/urdf/jk_arm.xacro"/>
+	<xacro:include filename="$(find jk_rollin_description)/urdf/jk_arm.gazebo.xacro"/>
+
+	<xacro:jk_arm link_prefix="arm_base"/>
+
+	<link name="base_footprint">
+		<visual>
+			<geometry>
+				<cylinder length="0.02" radius="0.06"/>
+			</geometry>
+			<material name="white"/>
+		</visual>
+	</link>
+
+
+
+	<joint name="setup_to_arm" type="fixed">
+		<parent link="base_footprint"/>
+		<child link="arm_base_link"/>
+		<origin xyz="0.0 0 0.0"/>
+	</joint>
+
+
+</robot>

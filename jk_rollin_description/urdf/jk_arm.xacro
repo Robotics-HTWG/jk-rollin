@@ -1,0 +1,181 @@
+<?xml version="1.0"?>
+
+<robot name="jk_arm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<xacro:macro name="jk_arm" params="link_prefix">
+		<link name="${link_prefix}_link">
+			<inertial>
+				<origin xyz="0 0 0.04" />
+				<mass value="0.289" />
+				<inertia ixx="424.539e-06" ixy="0.0" ixz="0.0"
+					 iyy="424.539e-06" iyz="0.0"
+					 izz="845.383e-06" />
+			</inertial>
+
+		</link>
+
+		<link name="shoulder_link">
+			<visual>
+				<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 ${m_PI/2}"/>
+				<geometry>
+					<mesh filename="package://jk_rollin_description/meshes/arm/shoulder.stl" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="white"/>
+			</visual>
+			<collision>
+				 <geometry>
+                                        <cylinder length="0.02" radius="0.06"/>
+                                </geometry>
+				<origin rpy="0 0 0" xyz="0.0 0.0 0.005"/>
+			</collision>
+			<collision>
+				<geometry>
+					<box size="0.03 0.044 0.050"/>
+				</geometry>
+				<origin rpy="0 0 0" xyz="0.0 0.0 0.035"/>
+			</collision>
+			<inertial>
+				<origin xyz="0 0 0" rpy="0.0 0.0 ${m_PI/2}" />
+				<mass value="0.290" />
+				<inertia ixx="258.780e-06" ixy="0.006e-06" ixz="0.624e-06"
+					 iyy="233.757e-06" iyz="0.018e-06"
+					 izz="403.664e-06" />
+			</inertial>
+
+		</link>
+
+		<joint name="turntable"  type="revolute">
+			<parent link="${link_prefix}_link"/>
+			<child link="shoulder_link"/>
+			<axis xyz="0 0 1"/>
+			<origin xyz="0.0 0 0.035" rpy="0 0 0"/>
+			<limit effort="20.0" lower="${-m_PI}" upper="${m_PI}" velocity="${m_PI}"/>
+			<dynamics friction="0.1"/>
+		</joint>
+
+		<link name="upper_arm">
+			<visual>
+				<origin xyz="0.0 0 0.0" rpy="${-m_PI/2} 0 0"/>
+				<geometry>
+					<mesh filename="package://jk_rollin_description/meshes/arm/upper_arm.stl" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="white"/>
+			</visual>
+			<collision>
+				<geometry>
+					<box size="0.10 0.03 0.044"/>
+				</geometry>
+				<origin rpy="0 0 -0.3" xyz="0.035 -0.015 0.0"/>
+			</collision>
+			<collision>
+				<geometry>
+					<box size="0.05 0.03 0.044"/>
+				</geometry>
+				<origin rpy="0 0 0.85" xyz="0.083 -0.01 0.0"/>
+			</collision>
+			<inertial>
+				<origin xyz="0 0 0" rpy="${m_PI/2} 0 0" />
+				<mass value="0.074" />
+				<inertia ixx="20.267e-06" ixy="0.306e-06" ixz="2.968e-06"
+					 iyy="47.257e-06" iyz="-0.100e-06"
+					 izz="49.239e-06" />
+			</inertial>
+
+		</link>
+
+		<joint name="shoulder" type="revolute">
+			<parent link="shoulder_link"/>
+			<child link="upper_arm"/>
+			<axis xyz="0 0 1"/>
+			<origin xyz="0.0 0 0.04705" rpy="${m_PI/2} 0.0 0"/>
+			<limit effort="20.0" lower="-1.7" upper="1.7" velocity="${m_PI}"/>
+			<dynamics friction="0.1"/>
+		</joint>
+
+		<link name="forearm">
+			<visual>
+				<origin xyz="0.018 0 0.0" rpy="${m_PI/2} 0 0"/>
+				<geometry>
+					<mesh filename="package://jk_rollin_description/meshes/arm/forearm.stl" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="white"/>
+			</visual>
+			<collision>
+				<geometry>
+					<box size="0.10 0.03 0.044"/>
+				</geometry>
+				<origin rpy="0 0 0" xyz="0.05 0.0 0.0"/>
+			</collision>
+			<inertial>
+				<origin xyz="0.018 0 0" rpy="${m_PI/2} 0 0" />
+				<mass value="0.067" />
+				<inertia ixx="13.999e-06" ixy="0.356e-06" ixz="0.018e-06"
+					 iyy="32.745e-06" iyz="0.006e-06"
+					 izz="38.629e-06" />
+			</inertial>
+
+		</link>
+
+		<joint name="elbow" type="revolute">
+			<parent link="upper_arm"/>
+			<child link="forearm"/>
+			<axis xyz="0 0 1"/>
+			<origin xyz="0.09279 0 0.0" rpy="0 0 0"/>
+			<limit effort="20.0" lower="-1.5" upper="2.87" velocity="${m_PI}"/>
+			<dynamics friction="0.1"/>
+		</joint>
+
+		<link name="finger">
+			<visual>
+				<origin xyz="0.003 0 0.0" rpy="${m_PI/2} 0 0"/>
+				<geometry>
+					<mesh filename="package://jk_rollin_description/meshes/arm/finger.stl" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="white"/>
+			</visual>
+			<collision>
+				<geometry>
+					<box size="0.06 0.03 0.044"/>
+				</geometry>
+				<origin rpy="0 0 0" xyz="0.03 0.0 0.0"/>
+			</collision>
+			<inertial>
+				<origin xyz="0.003 0 0" rpy="${m_PI/2} 0 0" />
+				<mass value="0.033" />
+				<inertia ixx="5.376e-06" ixy="0.035e-06" ixz="0.0e-06"
+					 iyy="4.870e-06" iyz="0.0e-06"
+					 izz="7.870e-06" />
+			</inertial>
+
+		</link>
+
+		<joint name="wrist" type="revolute">
+			<parent link="forearm"/>
+			<child link="finger"/>
+			<axis xyz="0 0 1"/>
+			<origin xyz="0.08225 0 0.0" rpy="0 0 0"/>
+			<limit effort="20.0" lower="-2.0" upper="2.0" velocity="${m_PI}"/>
+			<dynamics friction="0.1"/>
+		</joint>
+
+		<link name="vacuum_cup">
+			<inertial>
+				<origin xyz="0 0 0" />
+				<mass value="0.003" />
+				<inertia ixx="0.154e-06" ixy="0.0e-06" ixz="0.0e-06"
+					 iyy="0.261e-06" iyz="0.0e-06"
+					 izz="0.154e-06" />
+			</inertial>
+
+		</link>
+
+		<joint name="gripper" type="fixed">
+			<parent link="finger"/>
+			<child link="vacuum_cup"/>
+			<origin xyz="0.051 0 0.0" rpy="0 0 0"/>
+		</joint>
+
+	</xacro:macro>
+
+</robot>
+
